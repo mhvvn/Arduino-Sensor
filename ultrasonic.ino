@@ -1,69 +1,53 @@
-// C++ code
-//
-int distanceThreshold = 0;
+#define trigPin 9
+#define echoPin 10
+#define ledHijau 5
+#define ledKuning 6
+#define ledMerah 7
 
-int cm = 0;
-
-int inches = 0;
-
-long readUltrasonicDistance(int triggerPin, int echoPin)
-{
-  pinMode(triggerPin, OUTPUT);  // Clear the trigger
-  digitalWrite(triggerPin, LOW);
-  delayMicroseconds(2);
-  // Sets the trigger pin to HIGH state for 10 microseconds
-  digitalWrite(triggerPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(triggerPin, LOW);
-  pinMode(echoPin, INPUT);
-  // Reads the echo pin, and returns the sound wave travel time in microseconds
-  return pulseIn(echoPin, HIGH);
+void setup() {
+    pinMode(trigPin, OUTPUT);
+    pinMode(echoPin, INPUT);
+    pinMode(ledHijau, OUTPUT);
+    pinMode(ledKuning, OUTPUT);
+    pinMode(ledMerah, OUTPUT);
+    Serial.begin(9600);
 }
 
-void setup()
-{
-  Serial.begin(9600);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-}
+void loop() {
+    long duration;
+    int distance;
 
-void loop()
-{
-  // set threshold distance to activate LEDs
-  distanceThreshold = 350;
-  // measure the ping time in cm
-  cm = 0.01723 * readUltrasonicDistance(7, 6);
-  // convert to inches by dividing by 2.54
-  inches = (cm / 2.54);
-  Serial.print(cm);
-  Serial.print("cm, ");
-  Serial.print(inches);
-  Serial.println("in");
-  if (cm > distanceThreshold) {
-    digitalWrite(2, LOW);
-    digitalWrite(3, LOW);
-    digitalWrite(4, LOW);
-  }
-  if (cm <= distanceThreshold && cm > distanceThreshold - 10) {
-    digitalWrite(2, HIGH);
-    digitalWrite(3, LOW);
-    digitalWrite(4, LOW);
-  }
-  if (cm <= distanceThreshold - 10 && cm > distanceThreshold - 15) {
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
-    digitalWrite(4, LOW);
-  }
-  if (cm <= distanceThreshold - 15 && cm > distanceThreshold - 20) {
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
-    digitalWrite(4, HIGH);
-  }
-  if (cm <= distanceThreshold - 20) {
-    digitalWrite(2, HIGH);
-    digitalWrite(3, HIGH);
-    digitalWrite(4, HIGH);
-  }
-  delay(1000); // Wait for 100 millisecond(s)
+    // Kirim pulsa ultrasonik
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+
+    // Baca waktu pantulan kembali
+    duration = pulseIn(echoPin, HIGH);
+    
+    // Hitung jarak dalam cm
+    distance = duration * 0.034 / 2;
+
+    Serial.print("Jarak: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+
+    // Logika LED berdasarkan jarak
+    if (distance > 30) { // Jarak jauh (LED hijau menyala)
+        digitalWrite(ledHijau, HIGH);
+        digitalWrite(ledKuning, LOW);
+        digitalWrite(ledMerah, LOW);
+    } else if (distance > 15 && distance <= 30) { // Jarak sedang (LED kuning menyala)
+        digitalWrite(ledHijau, LOW);
+        digitalWrite(ledKuning, HIGH);
+        digitalWrite(ledMerah, LOW);
+    } else { // Jarak dekat (LED merah menyala)
+        digitalWrite(ledHijau, LOW);
+        digitalWrite(ledKuning, LOW);
+        digitalWrite(ledMerah, HIGH);
+    }
+
+    delay(500); // Delay untuk stabilitas sensor
 }
