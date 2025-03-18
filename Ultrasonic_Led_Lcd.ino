@@ -14,11 +14,6 @@ int distance;
 void setup() {
   lcd.init();
   lcd.backlight();
-  lcd.setCursor(0, 0);
-  lcd.print("Sensor Class");
-  lcd.setCursor(0, 1);
-  lcd.print("by : MHVN");
-  delay(2000);
 
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
