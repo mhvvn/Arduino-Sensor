@@ -1,11 +1,11 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-const int trigPin = 12;
-const int echoPin = 11;
-const int redLedPin = 8;
-const int yellowLedPin = 9;
-const int greenLedPin = 10; // Added green LED for >20cm
+const int trigPin = 9;
+const int echoPin = 1;
+const int redLedPin = 4;
+const int yellowLedPin = 5;
+const int greenLedPin = 6; // Added green LED for >20cm
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Adjust address if needed
 
 long duration;
