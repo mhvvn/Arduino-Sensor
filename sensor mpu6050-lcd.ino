@@ -36,19 +36,19 @@ void loop() {
 
   Serial.print("Rotation X: ");
   lcd.setCursor(0, 0);
-  lcd.print("R:");
+  lcd.print("X:");
   lcd.print(g.gyro.x);
   Serial.print(g.gyro.x);
 
   Serial.print(", Y: ");
   lcd.setCursor(0, 1);
-  lcd.print("P:");
+  lcd.print("Y:");
   lcd.print(g.gyro.y);
   Serial.print(g.gyro.y);
 
   Serial.print(", Z: ");
   lcd.setCursor(8, 0);
-  lcd.print("Y:");
+  lcd.print("Z:");
   lcd.print(g.gyro.z);
   Serial.print(g.gyro.z);
   Serial.println(" rad/s");
