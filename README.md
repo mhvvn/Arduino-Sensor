@@ -1,2 +1,2 @@
-# Ultrasonic-Sensor
-Script for measuring distance using ultrasonic sensor
+# Multi Sensor - Arduino
+Script for many sensor with arduino microcontroller
