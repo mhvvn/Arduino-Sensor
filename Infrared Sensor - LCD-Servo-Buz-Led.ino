@@ -1,20 +1,19 @@
-
+//Deklarasi Library
 #include <Servo.h>
 #include <LiquidCrystal_I2C.h>
 
-// Alamat LCD I2C
+//Deklarasi Alamat LCD I2C
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
+//Deklarasi PIN sensor dan komponen
 int sensor_pin = 2;
 int tap_servo_pin =5;
 int buzzer = 10;
 int led = 13;
 int val;
-
 Servo tap_servo;
 
-
-
+//Deklarasi fungsi yg akan berjalan sekali ketika arduino di hidupkan
 void setup(){
   pinMode(sensor_pin,INPUT);
   pinMode(buzzer, OUTPUT);
@@ -27,9 +26,9 @@ void setup(){
   delay(1000);
   lcd.clear();
   Serial.begin(9600);
-  
 }
 
+//Deklarasi fungsi yg akan selalu berjalan / di ulang hingga arduino di matikan
 void loop(){
   val = digitalRead(sensor_pin);
 
@@ -41,10 +40,9 @@ void loop(){
     lcd.setCursor(0, 0);
     lcd.print("Ada Objek");
     lcd.print("        ");
-
   }
   if (val==HIGH){
-    noTone(buzzer);
+   noTone(buzzer);
     tap_servo.write(180);
     digitalWrite(led,LOW);
     Serial.println("Sensor Non Aktif");
